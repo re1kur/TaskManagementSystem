@@ -2,13 +2,44 @@ spring:
   application:
     name: Task Management System
 
+  liquibase:
+    liquibase-schema: liquibase
+    change-log: db/changelog/db.changelog-master.yml
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+
+
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/task_management_system_db
+    url: jdbc:postgresql://localhost:5432/task_management_system_db?currentSchema=${custom.datasource.current_schema}
     username: postgres
     password: 123456778
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+
   jpa:
     properties.hibernate:
       show_sql: true
       format_sql: true
     open-in-view: false
+
+server:
+  servlet:
+    session:
+      timeout: 30m
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+custom:
+  datasource:
+    current_schema: ver1

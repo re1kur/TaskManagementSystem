@@ -2,6 +2,7 @@ package com.example.software.design.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Generated;
 
 import java.time.LocalDate;
 
@@ -20,13 +21,15 @@ public class Task {
     @JoinColumn(name = "project_id")
     Project project;
 
+    @Column(columnDefinition = "unnamed")
     String name;
-
     String description;
 
-    @Column(name = "start_date")
+    @Column(insertable = false)
     LocalDate startDate;
 
-    @Column(name = "dead_date")
     LocalDate deadDate;
+
+    @Column(insertable = false)
+    String status;
 }

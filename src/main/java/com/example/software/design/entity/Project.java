@@ -2,7 +2,9 @@ package com.example.software.design.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.annotation.PropertySource;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,10 +20,19 @@ public class Project {
 
     String name;
 
-    @ManyToMany
-    @JoinTable(name = "project_users")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "project_users",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     Set<User> users;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     Set<Task> tasks;
+
+    public void addUser(User user) {
+        if (users == null) {
+            users = new HashSet<>();
+        }
+        users.add(user);
+    }
 }
