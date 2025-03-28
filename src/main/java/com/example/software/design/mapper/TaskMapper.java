@@ -3,7 +3,7 @@ package com.example.software.design.mapper;
 import com.example.software.design.dto.task.ReadTask;
 import com.example.software.design.dto.task.WriteTask;
 import com.example.software.design.entity.Task;
-import com.example.software.design.repository.ProjectRepository;
+import com.example.software.design.repository.postgres.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

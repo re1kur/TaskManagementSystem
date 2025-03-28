@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-
 public class SecurityConfiguration {
 
     @Bean
@@ -24,9 +23,9 @@ public class SecurityConfiguration {
                 .sessionManagement(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/user/register").permitAll()
-                                .requestMatchers("/user/info").hasAnyAuthority("USER", "ADMIN")
-                                .requestMatchers("/user/all").hasAuthority("ADMIN")
+                                .requestMatchers("/api/users/register", "/api/users/verify").permitAll()
+                                .requestMatchers("/api/users/info").authenticated()
+                                .requestMatchers("/api/users/list").hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .build();

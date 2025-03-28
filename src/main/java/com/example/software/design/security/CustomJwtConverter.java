@@ -3,7 +3,7 @@ package com.example.software.design.security;
 import com.example.software.design.dto.user.ReadUser;
 import com.example.software.design.dto.user.WriteUser;
 import com.example.software.design.entity.Role;
-import com.example.software.design.service.UserService;
+import com.example.software.design.service.impl.DefaultUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -17,11 +17,11 @@ import java.util.Optional;
 @Component
 public class CustomJwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
-    UserService userService;
+    DefaultUserService defaultUserService;
 
     @Autowired
-    public CustomJwtConverter(UserService userService) {
-        this.userService = userService;
+    public CustomJwtConverter(DefaultUserService defaultUserService) {
+        this.defaultUserService = defaultUserService;
     }
 
     @Override
@@ -29,16 +29,16 @@ public class CustomJwtConverter implements Converter<Jwt, AbstractAuthentication
         String email = jwt.getClaimAsString("email");
         String username = jwt.getClaimAsString("name");
         Collection<Role> authorities;
-        Optional<ReadUser> optionalUser = userService.readUserByEmail(email);
+        Optional<ReadUser> optionalUser = defaultUserService.readUserByEmail(email);
         if (optionalUser.isEmpty()) {
             WriteUser writeUser = WriteUser.builder()
                     .email(email)
                     .username(username)
                     .isOauth(true)
                     .build();
-            userService.saveUser(writeUser);
+            defaultUserService.saveUser(writeUser);
         }
-        SecurityUser user = (SecurityUser) userService.loadUserByUsername(email);
+        SecurityUser user = (SecurityUser) defaultUserService.loadUserByUsername(email);
 
         authorities = user.getAuthorities();
         return new JwtAuthenticationToken(jwt, authorities, email);

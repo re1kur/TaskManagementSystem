@@ -1,4 +1,4 @@
-package com.example.software.design.util;
+package com.example.software.design.util.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,11 @@ public class ControllerExceptionHandler {
         body.put("status", HttpStatus.BAD_REQUEST.value());
 
         return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler(VerificationException.class)
+    public ResponseEntity<String> handleVerificationException(VerificationException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
 }

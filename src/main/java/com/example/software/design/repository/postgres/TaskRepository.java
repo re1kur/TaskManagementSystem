@@ -1,4 +1,4 @@
-package com.example.software.design.repository;
+package com.example.software.design.repository.postgres;
 
 import com.example.software.design.entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;

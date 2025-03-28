@@ -3,7 +3,8 @@ package com.example.software.design.controller;
 import com.example.software.design.dto.task.ReadTask;
 import com.example.software.design.dto.task.WriteTask;
 import com.example.software.design.service.TaskService;
-import com.example.software.design.util.ValidationException;
+import com.example.software.design.service.impl.DefaultTaskService;
+import com.example.software.design.util.exceptions.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,17 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/api/tasks")
 public class TaskController {
 
     private final TaskService service;
 
     @Autowired
-    public TaskController(TaskService service) {
+    public TaskController(DefaultTaskService service) {
         this.service = service;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<ReadTask> readTask(@PathVariable int id) {
         Optional<ReadTask> mayBeTask = service.readTask(id);
         return mayBeTask.map(ResponseEntity.ok()::body)
@@ -33,13 +34,13 @@ public class TaskController {
     }
 
     @Transactional
-    @PostMapping("/add")
+    @PostMapping("create")
     public void writeTask(@Validated @RequestBody WriteTask writeTask, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) service.saveTask(writeTask);
         else throw new ValidationException(bindingResult.getAllErrors(), "Task is not valid.");
     }
 
-    @GetMapping("/all")
+    @GetMapping("list")
     public List<ReadTask> readAllTasks() {
         return service.readAllTasks();
     }

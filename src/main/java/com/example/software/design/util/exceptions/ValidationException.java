@@ -1,4 +1,4 @@
-package com.example.software.design.util;
+package com.example.software.design.util.exceptions;
 
 import lombok.Getter;
 import org.springframework.validation.ObjectError;

@@ -10,8 +10,8 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @ToString(exclude = {"projects"})
-@Getter
 @Table(name = "users")
 public class User {
     @Id
@@ -27,6 +27,9 @@ public class User {
     Role role;
 
     boolean isOauth;
+
+    @Column(insertable = false)
+    boolean isVerified;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "project_users",
