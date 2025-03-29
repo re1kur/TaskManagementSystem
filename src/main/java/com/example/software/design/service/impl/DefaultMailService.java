@@ -40,21 +40,7 @@ public class DefaultMailService implements MailService {
                 .subject("Verify Code")
                 .body("Verify Code is " + code)
                 .build();
-//        try {
-//            Mono<String> response = mailClient.post()
-//                    .uri("/send")
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .body(BodyInserters.fromValue(emailRequest))
-//                    .retrieve()
-//                    .bodyToMono(String.class);
-//
-//            response.subscribe(
-//                    result -> log.info("Email sent successfully: {}", result),
-//                    error -> log.error("Error sending email: ", error)
-//            );
-//        } catch (Exception e) {
-//            log.error("Error sending email: ", e);
-//        }
+
         rabbitTemplate.convertAndSend(verification, verification, emailRequest);
     }
 }
