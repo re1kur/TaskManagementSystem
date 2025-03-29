@@ -1,4 +1,4 @@
-package com.example.software.design.entity;
+package com.example.software.design.entity.jpa;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -2,7 +2,7 @@ package com.example.software.design.security;
 
 import com.example.software.design.dto.user.ReadUser;
 import com.example.software.design.dto.user.WriteUser;
-import com.example.software.design.entity.Role;
+import com.example.software.design.entity.jpa.Role;
 import com.example.software.design.service.impl.DefaultUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

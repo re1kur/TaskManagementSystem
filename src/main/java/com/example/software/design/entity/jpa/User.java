@@ -1,4 +1,4 @@
-package com.example.software.design.entity;
+package com.example.software.design.entity.jpa;
 
 import jakarta.persistence.*;
 import lombok.*;

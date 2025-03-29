@@ -2,7 +2,7 @@ package com.example.software.design.mapper;
 
 import com.example.software.design.dto.user.ReadUser;
 import com.example.software.design.dto.user.WriteUser;
-import com.example.software.design.entity.User;
+import com.example.software.design.entity.jpa.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

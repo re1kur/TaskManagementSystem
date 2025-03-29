@@ -2,7 +2,7 @@ package com.example.software.design.mapper;
 
 import com.example.software.design.dto.project.ReadProject;
 import com.example.software.design.dto.project.WriteProject;
-import com.example.software.design.entity.Project;
+import com.example.software.design.entity.jpa.Project;
 import org.springframework.stereotype.Component;
 
 @Component

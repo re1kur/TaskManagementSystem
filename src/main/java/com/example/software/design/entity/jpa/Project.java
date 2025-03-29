@@ -1,8 +1,7 @@
-package com.example.software.design.entity;
+package com.example.software.design.entity.jpa;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.PropertySource;
 
 import java.util.HashSet;
 import java.util.Set;

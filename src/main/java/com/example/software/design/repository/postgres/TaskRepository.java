@@ -1,6 +1,6 @@
 package com.example.software.design.repository.postgres;
 
-import com.example.software.design.entity.Task;
+import com.example.software.design.entity.jpa.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

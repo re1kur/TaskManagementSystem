@@ -14,6 +14,11 @@ spring:
           jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
 
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: quest
+    password: guest
 
   datasource:
     url: jdbc:postgresql://localhost:5432/task_management_system_db?currentSchema=${custom.datasource.current_schema}
@@ -22,6 +27,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
+
   data:
     redis:
       host: localhost
@@ -51,4 +57,7 @@ custom:
     code:
       lifetime: 15
   mailService:
+    queues:
+      - notification: notifications
+      - verification: verification
     url: http://localhost:8082/api
