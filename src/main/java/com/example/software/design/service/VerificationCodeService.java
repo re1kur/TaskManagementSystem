@@ -12,4 +12,6 @@ public interface VerificationCodeService {
     Optional<VerificationCode> readCode(String email);
 
     void deleteCode(String email);
+
+    void regenerateCode(String email);
 }

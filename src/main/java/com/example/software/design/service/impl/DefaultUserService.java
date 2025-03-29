@@ -103,28 +103,31 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public void verify(String email, String code) throws VerificationException, UsernameNotFoundException {
+    public void verify(String email, String code, boolean sendNew) throws VerificationException, UsernameNotFoundException {
         Optional<User> mayBeUser = repo.findByEmail(email);
         if (mayBeUser.isEmpty()) throw new UsernameNotFoundException("The user not found: " + email);
         User user = mayBeUser.get();
         if (user.isVerified()) throw new VerificationException("The user is already verified. Sign in.");
+        if (sendNew) {
+            codeService.regenerateCode(email);
+            return;
+        }
         Optional<VerificationCode> mayBeCode = codeService.readCode(email);
         if (mayBeCode.isEmpty()) {
-            codeService.deleteCode(email);
-            codeService.writeCode(email);
+            codeService.regenerateCode(email);
             throw new VerificationException("Code is regenerated. Check the mail and try again.");
         }
         VerificationCode verificationCode = mayBeCode.get();
         if (verificationCode.isExpires()) {
-            codeService.deleteCode(email);
-            codeService.writeCode(email);
+            codeService.regenerateCode(email);
             throw new VerificationException("Code is expired. Code is regenerated. Check the mail and try again.");
         }
-        if (verificationCode.getCode().equals(code)) {
+        boolean isEquals = verificationCode.getCode().equals(code);
+        if (!isEquals) throw new VerificationException("Code is wrong");
+        else {
             user.setVerified(true);
             repo.save(user);
             codeService.deleteCode(email);
         }
-        if (!verificationCode.getCode().equals(code)) throw new VerificationException("Code is wrong");
     }
 }

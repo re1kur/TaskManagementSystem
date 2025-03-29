@@ -17,7 +17,7 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: quest
+    username: guest
     password: guest
 
   datasource:
@@ -57,7 +57,14 @@ custom:
     code:
       lifetime: 15
   mailService:
-    queues:
-      - notification: notifications
-      - verification: verification
+    exchange:
+      verification: verificationExchange
+      notification: notificationExchange
+    queue:
+      verification: verificationQueue
+      notification: notificationQueue
+    routingKey:
+      verification: verificationRoutingKey
+      notification: notificationRoutingKey
+
     url: http://localhost:8082/api

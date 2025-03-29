@@ -23,5 +23,5 @@ public interface UserService extends UserDetailsService {
 
     Map<String, String> getInfo(Authentication authentication);
 
-    void verify(String email, String code) throws VerificationException;
+    void verify(String email, String code, boolean sendNew) throws VerificationException;
 }

@@ -4,56 +4,57 @@ import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class MailConfiguration {
 
-    @Value("${custom.mailService.url}")
-    private String mailServiceUrl;
+    @Value("${custom.mailService.queue.verification}")
+    private String verificationQueue;
 
-    @Value("${custom.mailService.queues[0].notification}")
-    private String notification;
+    @Value("${custom.mailService.exchange.verification}")
+    private String verificationExchange;
 
-    @Value("${custom.mailService.queues[1].verification}")
-    private String verification;
+    @Value("${custom.mailService.routingKey.verification}")
+    private String verificationRoutingKey;
+
+    @Value("${custom.mailService.queue.notification}")
+    private String notificationQueue;
+
+    @Value("${custom.mailService.exchange.notification}")
+    private String notificationExchange;
+
+    @Value("${custom.mailService.routingKey.notification}")
+    private String notificationRoutingKey;
 
     @Bean
-    WebClient mailClient() {
-        return WebClient.builder()
-                .baseUrl(mailServiceUrl)
-                .build();
+    public Queue notificationQueue () {
+        return new Queue(notificationQueue);
     }
 
     @Bean
-    Queue notificationQueue () {
-        return new Queue(notification);
+    public Queue verificationQueue () {
+        return new Queue(verificationQueue);
     }
 
     @Bean
-    Queue verificationQueue () {
-        return new Queue(verification);
+    public Exchange notificationExchange() {
+        return new TopicExchange(notificationExchange);
     }
 
     @Bean
-    Exchange notificationExchange() {
-        return new TopicExchange(notification);
+    public Exchange verificationExchange() {
+        return new TopicExchange(verificationExchange);
     }
 
     @Bean
-    Exchange verificationExchange() {
-        return new TopicExchange(verification);
-    }
-
-    @Bean
-    Binding notificationBinding(Queue notificationQueue, Exchange notificationExchange) {
+    public Binding notificationBinding(Queue notificationQueue, Exchange notificationExchange) {
         return BindingBuilder.bind(notificationQueue).to(notificationExchange)
-                .with(notification).noargs();
+                .with(notificationRoutingKey).noargs();
     }
 
     @Bean
-    Binding verificationBinding(Queue verificationQueue, Exchange verificationExchange) {
+    public Binding verificationBinding(Queue verificationQueue, Exchange verificationExchange) {
         return BindingBuilder.bind(verificationQueue).to(verificationExchange)
-                .with(verification).noargs();
+                .with(verificationRoutingKey).noargs();
     }
 }

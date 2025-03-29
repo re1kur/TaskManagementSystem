@@ -39,8 +39,8 @@ public class UserController {
 
     @Transactional
     @PostMapping("verify")
-    public ResponseEntity<String> verifyUser(@RequestParam("email") String email, @RequestParam("code") String code) throws VerificationException {
-        service.verify(email, code);
+    public ResponseEntity<String> verifyUser(@RequestParam("email") String email, @RequestParam("code") String code, @RequestParam(required = false, name = "new") String sendNew) throws VerificationException {
+        service.verify(email, code, sendNew != null);
         return ResponseEntity.ok("The user has been verified. Try to sign in.");
     }
 
