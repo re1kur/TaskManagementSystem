@@ -11,15 +11,13 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
-    Optional<ReadUser> readUser(Integer id);
+    Optional<ReadUser> read(Integer id);
 
-    void saveUser(WriteUser writeUser);
+    void write(WriteUser writeUser);
 
-    List<ReadUser> readAllUsers();
+    List<ReadUser> readAll();
 
-    Optional<ReadUser> readUserByEmail(String email);
-
-    void updateUser(WriteUser writeUser);
+    Optional<ReadUser> readByEmail(String email);
 
     Map<String, String> getInfo(Authentication authentication);
 

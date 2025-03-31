@@ -1,25 +1,9 @@
 package com.example.software.design.mapper;
 
+import com.example.software.design.dto.project.ProjectDto;
 import com.example.software.design.dto.project.ReadProject;
-import com.example.software.design.dto.project.WriteProject;
-import com.example.software.design.entity.jpa.Project;
-import org.springframework.stereotype.Component;
 
-@Component
-public class ProjectMapper implements Mapper<ReadProject, WriteProject, Project> {
+public interface ProjectMapper {
 
-    @Override
-    public ReadProject mapRead(Project from) {
-        return ReadProject.builder()
-                .id(from.getId())
-                .name(from.getName())
-                .build();
-    }
-
-    @Override
-    public Project mapEntity(WriteProject from) {
-        return Project.builder()
-                .name(from.getName())
-                .build();
-    }
+    ReadProject read(ProjectDto from);
 }

@@ -1,6 +1,6 @@
 package com.example.software.design.util.verify;
 
-import com.example.software.design.entity.redis.VerificationCode;
+import com.example.software.design.dto.mail.VerificationCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

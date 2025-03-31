@@ -1,6 +1,6 @@
 package com.example.software.design.util.verify;
 
-import com.example.software.design.entity.redis.VerificationCode;
+import com.example.software.design.dto.mail.VerificationCode;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

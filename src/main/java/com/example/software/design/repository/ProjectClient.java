@@ -1,4 +1,4 @@
-package com.example.software.design.service;
+package com.example.software.design.repository;
 
 import com.example.software.design.dto.project.ReadProject;
 import com.example.software.design.dto.project.WriteProject;
@@ -6,13 +6,10 @@ import com.example.software.design.dto.project.WriteProject;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProjectService {
-
-    void write(WriteProject writeProject);
+public interface ProjectClient {
+    void save(WriteProject project);
 
     List<ReadProject> readAll();
 
     Optional<ReadProject> read(int id);
-
-//    boolean attachUser(int id, int userId) throws ValidationException;
 }

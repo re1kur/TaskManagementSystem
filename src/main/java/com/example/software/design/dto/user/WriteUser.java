@@ -4,26 +4,27 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Builder
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class WriteUser {
     @Email
     @Size(max = 256)
     @NotNull
-    String email;
+    private String email;
 
     @NotBlank
     @Size(min = 6, max = 64)
     @NotNull
-    String username;
+    private String username;
 
     @NotBlank
     @Size(min = 6, max = 128)
     @NotNull
-    String password;
+    private String password;
 
-    boolean isOauth = false;
+    private boolean isOauth = false;
 }

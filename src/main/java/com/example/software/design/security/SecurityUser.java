@@ -1,6 +1,6 @@
 package com.example.software.design.security;
 
-import com.example.software.design.entity.jpa.Role;
+import com.example.software.design.dto.user.Role;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
