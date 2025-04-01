@@ -32,7 +32,7 @@ public class UserController {
         else throw new ValidationException(bindingResult.getAllErrors(), "User is not valid");
     }
 
-    @PostMapping("verify")
+    @PutMapping("verify")
     public ResponseEntity<String> verifyUser(@RequestParam("email") String email, @RequestParam("code") String code, @RequestParam(required = false, name = "new") String sendNew) throws VerificationException {
         service.verify(email, code, sendNew != null);
         return ResponseEntity.ok("The user has been verified. Try to sign in.");

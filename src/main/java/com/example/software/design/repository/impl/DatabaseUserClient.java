@@ -85,7 +85,7 @@ public class DatabaseUserClient implements UserClient {
 
     @Override
     public void update(UserDto user) {
-        client.post()
+        client.put()
                 .uri("/users/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(user)

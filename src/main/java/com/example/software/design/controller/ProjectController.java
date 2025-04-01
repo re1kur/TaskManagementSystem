@@ -39,11 +39,11 @@ public class ProjectController {
                 ResponseEntity.ok().body(readProject)).orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
-//    @Transactional
-//    @PostMapping("{id}/attachUser")
-//    public boolean attachUser(@PathVariable int id, @RequestParam(name = "id") int userId) {
-//        return service.attachUser(id, userId);
-//    }
+    @Transactional
+    @PostMapping("{id}/attachUser")
+    public ResponseEntity<String> attachUser(@PathVariable("id") int projectId, @RequestParam(name = "id") int userId) {
+        return service.attachUser(projectId, userId);
+    }
 
     @GetMapping("list")
     public List<ReadProject> findAllProjects() {

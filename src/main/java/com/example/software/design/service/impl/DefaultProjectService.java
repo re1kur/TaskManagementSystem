@@ -4,7 +4,9 @@ import com.example.software.design.dto.project.ReadProject;
 import com.example.software.design.dto.project.WriteProject;
 import com.example.software.design.repository.ProjectClient;
 import com.example.software.design.service.ProjectService;
+import com.example.software.design.util.exceptions.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,18 +40,9 @@ public class DefaultProjectService implements ProjectService {
         return client.read(id);
     }
 
-//    @Transactional
-//    @Override
-//    public boolean attachUser(int id, int userId) throws ValidationException {
-//        Optional<Project> mayBeProject = repo.findById(id);
-//        Optional<User> mayBeUser = userRepo.findById(userId);
-//        if (mayBeProject.isPresent() && mayBeUser.isPresent()) {
-//            Project project = mayBeProject.get();
-//            User user = mayBeUser.get();
-//            project.addUser(user);
-//            repo.save(project);
-//            return true;
-//        }
-//        return false;
-//    }
+    @Transactional
+    @Override
+    public ResponseEntity<String> attachUser(int projectId, int userId) throws ValidationException {
+        return client.attachUser(projectId, userId);
+    }
 }

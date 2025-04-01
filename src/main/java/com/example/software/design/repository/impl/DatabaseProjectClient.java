@@ -7,10 +7,12 @@ import com.example.software.design.mapper.ProjectMapper;
 import com.example.software.design.repository.ProjectClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -52,6 +54,7 @@ public class DatabaseProjectClient implements ProjectClient {
 
     @Override
     public Optional<ReadProject> read(int id) {
+        log.info("Read project with id {}", id);
         return client.get()
                 .uri("/projects/read?id=" + id)
                 .accept(MediaType.APPLICATION_JSON)
@@ -59,5 +62,16 @@ public class DatabaseProjectClient implements ProjectClient {
                 .bodyToMono(ProjectDto.class)
                 .map(mapper::read)
                 .blockOptional();
+    }
+
+    @Override
+    public ResponseEntity<String> attachUser(int projectId, int userId) {
+        return client.post()
+                .uri("/projects/attachUser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(Map.of("projectId", projectId, "userId", userId))
+                .retrieve()
+                .toEntity(String.class)
+                .block();
     }
 }
