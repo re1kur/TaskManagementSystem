@@ -1,0 +1,10 @@
+services:
+  software.design.user.database:
+    image: postgres:latest
+    container_name: user.db
+    environment:
+      POSTGRES_DB: soft.user.db
+      POSTGRES_USER: softAdmin
+      POSTGRES_PASSWORD: softStrongPassword
+    ports:
+      - "5433:5432"

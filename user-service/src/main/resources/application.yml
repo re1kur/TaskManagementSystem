@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: user-service
+  liquibase:
+    change-log: db/changelog/db.changelog-master.yml
+  docker:
+    compose:
+      file: user-service/docker-compose.yml
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 0
+
+custom:
+  jwt:
+    keySize: 2048
+    privateKeyPath: /tmp/TMS/private.key
+    publicKeyPath: /tmp/TMS/public.key
