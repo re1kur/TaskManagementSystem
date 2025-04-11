@@ -6,6 +6,12 @@ spring:
   docker:
     compose:
       file: user-service/docker-compose.yml
+  jpa:
+    open-in-view: false
+  rabbitmq:
+    virtual-host: vhost
+    password: softPassword
+    username: softAdmin
 
 eureka:
   client:
@@ -18,5 +24,16 @@ server:
 custom:
   jwt:
     keySize: 2048
-    privateKeyPath: /tmp/TMS/private.key
-    publicKeyPath: /tmp/TMS/public.key
+    privateKeyPath: /tmp/private.key
+    publicKeyPath: /tmp/public.key
+
+rabbitmq:
+  exchange: soft.registration.exchange
+  routingKey: user.register
+  queues:
+    welcome-queue:
+      name: user.welcome.queue
+    verification-registration-queue:
+      name: verification.registration.queue
+    verification-queue:
+      name: user.verification.queue

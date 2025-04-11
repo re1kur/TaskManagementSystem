@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import re1kur.userservice.entity.Role;
 import re1kur.userservice.entity.User;
 import re1kur.userservice.exception.VerificationJwtTokenException;
 import re1kur.userservice.jwt.JwtProvider;
@@ -46,7 +47,11 @@ public class DefaultJwtProvider implements JwtProvider {
 
     @Override
     public String provide(User user) {
-        return generate(new Credentials(user.getId(), user.getEmail(), List.of()));
+        return generate(new Credentials(user.getId(), user.getEmail(),
+                user.getRoles()
+                        .stream()
+                        .map(Role::getName)
+                        .toList()));
     }
 
     @SneakyThrows

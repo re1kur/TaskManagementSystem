@@ -5,7 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import re1kur.userservice.dto.UserPayload;
 import re1kur.userservice.entity.User;
+import re1kur.userservice.mq.message.UserRegistrationMessage;
 import re1kur.userservice.mapper.UserMapper;
+
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -22,5 +25,10 @@ public class DefaultUserMapper implements UserMapper {
             build.setOauth(payload.oauth());
         }
         return build;
+    }
+
+    @Override
+    public UserRegistrationMessage message(User user) {
+        return new UserRegistrationMessage(LocalDateTime.now(), user.getEmail());
     }
 }

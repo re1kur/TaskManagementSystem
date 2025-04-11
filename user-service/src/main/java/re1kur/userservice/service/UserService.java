@@ -9,4 +9,6 @@ public interface UserService {
     void register(UserPayload payload) throws UserRegistrationException;
 
     ResponseEntity<String> login(UserPayload payload) throws UserLoginException;
+
+    ResponseEntity<String> checkUser(String email);
 }

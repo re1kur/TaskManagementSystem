@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: verification-service
+  rabbitmq:
+    username: softAdmin
+    password: softPassword
+    virtual-host: vhost
+  docker:
+    compose:
+      file: verification-service/docker-compose.yml
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+rabbitmq:
+  exchange: soft.verification.exchange
+  queues:
+    registrationQueue:
+      name: verification.registration.queue
+    verificationQueue:
+      name: user.verification.queue
+      rout-key: user.verified
+    notificationQueue:
+      name: user.notification.queue
+      rout-key: code.generated
+services:
+  user-service:
+    url: http://localhost:8761/user-service/api/
