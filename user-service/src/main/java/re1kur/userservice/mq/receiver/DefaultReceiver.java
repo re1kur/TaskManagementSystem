@@ -15,6 +15,7 @@ public class DefaultReceiver {
 
     @RabbitListener(queues = "${rabbitmq.queues.verification-queue.name}")
     public void verifiedUserQueue(String email) {
+        log.info("Verification of user with email by {}.", email);
         User user = repo.findByEmail(email).get();
         user.setVerified(true);
         repo.save(user);

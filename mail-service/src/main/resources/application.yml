@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: mail-service
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: <>
+    password: <>
+    ssl:
+      enabled: true
+  rabbitmq:
+    virtual-host: vhost
+    password: softPassword
+    username: softAdmin
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+rabbitmq:
+  queues:
+    welcome-queue:
+      name: user.welcome.queue
+    notification-queue:
+      name: user.notification.queue
+
+
+server:
+  port: 0

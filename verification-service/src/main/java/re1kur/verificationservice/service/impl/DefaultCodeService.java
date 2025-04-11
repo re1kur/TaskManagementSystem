@@ -3,11 +3,12 @@ package re1kur.verificationservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import re1kur.verificationservice.client.UserClient;
 import re1kur.verificationservice.dto.UserVerificationPayload;
 import re1kur.verificationservice.entity.Code;
 import re1kur.verificationservice.mq.message.UserCheckResponseMessage;
-import re1kur.verificationservice.mq.message.UserNotificationCodeMessage;
+import re1kur.verificationservice.mq.message.MessageRequest;
 import re1kur.verificationservice.exception.VerificationException;
 import re1kur.verificationservice.generator.CodeProvider;
 import re1kur.verificationservice.mapper.CodeMapper;
@@ -29,6 +30,7 @@ public class DefaultCodeService implements CodeService {
 
 
     @Override
+    @Transactional
     public void verify(UserVerificationPayload payload) throws VerificationException {
         String email = payload.email();
         if (!userIsExistsOrValid(email)) throw new VerificationException("User doesn't exists or already verified.");
@@ -46,10 +48,11 @@ public class DefaultCodeService implements CodeService {
 
 
     @Override
+    @Transactional
     public void generateAndSendCode(String email) {
         Code code = codeProvider.provide(email);
         repo.save(code);
-        UserNotificationCodeMessage notification = mapper.message(code);
+        MessageRequest notification = mapper.message(code);
         sender.publishNotification(notification);
     }
 

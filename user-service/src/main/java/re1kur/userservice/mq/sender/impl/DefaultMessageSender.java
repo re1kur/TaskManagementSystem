@@ -1,6 +1,5 @@
 package re1kur.userservice.mq.sender.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,7 @@ public class DefaultMessageSender implements MessageSender {
     @Override
     @SneakyThrows
     public void sendUserRegistrationMessage(String message) {
-        log.info("Sending user registration message: {}", message);
+        log.info("Sending registered user's email in message to two queues: {}.", message);
         template.convertAndSend(exchange, routingKey, message);
     }
 }
