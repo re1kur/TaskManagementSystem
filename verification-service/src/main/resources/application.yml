@@ -30,4 +30,4 @@ rabbitmq:
       rout-key: code.generated
 services:
   user-service:
-    url: http://localhost:8761/user-service/api/
+    url: http://user-service

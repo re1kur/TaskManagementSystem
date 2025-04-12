@@ -1,7 +1,6 @@
 package re1kur.verificationservice.client.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import re1kur.verificationservice.client.UserClient;
@@ -15,8 +14,10 @@ public class DefaultUserClient implements UserClient {
     @Override
     public UserCheckResponseMessage checkUser(String email) {
         return client.get()
-                .uri("checkUser")
-                .accept(MediaType.APPLICATION_JSON)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/checkUser")
+                        .queryParam("email", email)
+                        .build())
                 .retrieve()
                 .bodyToMono(UserCheckResponseMessage.class)
                 .block();

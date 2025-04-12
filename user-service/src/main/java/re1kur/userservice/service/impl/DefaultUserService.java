@@ -1,6 +1,5 @@
 package re1kur.userservice.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import re1kur.userservice.dto.UserPayload;
 import re1kur.userservice.entity.User;
 import re1kur.userservice.exception.UserRegistrationException;
 import re1kur.userservice.mq.message.UserCheckResponseMessage;
-import re1kur.userservice.mq.message.UserRegistrationMessage;
 import re1kur.userservice.exception.UserLoginException;
 import re1kur.userservice.jwt.JwtProvider;
 import re1kur.userservice.mapper.UserMapper;
@@ -31,7 +29,6 @@ public class DefaultUserService implements UserService {
     private final JwtProvider jwtProvider;
     private final BCryptPasswordEncoder encoder;
     private final MessageSender publisher;
-    private final ObjectMapper serializer;
 
     @Override
     @Transactional
@@ -39,7 +36,7 @@ public class DefaultUserService implements UserService {
         if (repo.existsByEmail(payload.email()))
             throw new UserRegistrationException("User with this email is already exists");
         User user = mapper.write(payload);
-        user = repo.save(user);
+        repo.save(user);
         publisher.sendUserRegistrationMessage(payload.email());
     }
 
@@ -57,7 +54,7 @@ public class DefaultUserService implements UserService {
 
     @Override
     @SneakyThrows
-    public ResponseEntity<String> checkUser(String email) {
+    public ResponseEntity<UserCheckResponseMessage> checkUser(String email) {
         Optional<User> mayBeUser = repo.findByEmail(email);
         boolean isExists = mayBeUser.isPresent();
         boolean isVerified = false;
@@ -65,8 +62,7 @@ public class DefaultUserService implements UserService {
             isVerified = mayBeUser.get().getVerified();
         }
         return ResponseEntity.status(HttpStatus.FOUND)
-                .body(serializer.writeValueAsString(
-                        new UserCheckResponseMessage(email, isExists, isVerified)));
+                .body(new UserCheckResponseMessage(email, isExists, isVerified));
     }
 
 }

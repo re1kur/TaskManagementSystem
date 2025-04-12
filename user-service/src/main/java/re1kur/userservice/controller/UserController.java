@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import re1kur.userservice.dto.UserPayload;
 import re1kur.userservice.exception.UserLoginException;
 import re1kur.userservice.exception.UserRegistrationException;
+import re1kur.userservice.mq.message.UserCheckResponseMessage;
 import re1kur.userservice.service.UserService;
 
 @RestController
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("checkUser")
-    public ResponseEntity<String> checkUser(@RequestParam String email) {
+    public ResponseEntity<UserCheckResponseMessage> checkUser(@RequestParam String email) {
         return service.checkUser(email);
     }
 }

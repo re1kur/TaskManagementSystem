@@ -33,15 +33,16 @@ public class DefaultCodeService implements CodeService {
     @Transactional
     public void verify(UserVerificationPayload payload) throws VerificationException {
         String email = payload.email();
-        if (!userIsExistsOrValid(email)) throw new VerificationException("User doesn't exists or already verified.");
+        if (userIsNotExistsOrValid(email)) throw new VerificationException("User doesn't exists or already verified.");
         Code code = repo.findById(email).orElseThrow(() -> new VerificationException("Code not found."));
-        if (code.getExpirationDate().isAfter(LocalDateTime.now())) {
+        if (LocalDateTime.now().isAfter(code.getExpirationDate())) {
             generateAndSendCode(email);
             throw new VerificationException("Code expired. Check the mail.");
         }
         if (code.getContent().equals(payload.code())) {
             repo.delete(code);
             sender.verifyUser(email);
+            return;
         }
         throw new VerificationException("Code is incorrect.");
     }
@@ -56,8 +57,9 @@ public class DefaultCodeService implements CodeService {
         sender.publishNotification(notification);
     }
 
-    private boolean userIsExistsOrValid(String email) {
+    private boolean userIsNotExistsOrValid(String email) {
         UserCheckResponseMessage resp = client.checkUser(email);
-        return resp.isExists() && resp.isVerified();
+        if (!resp.isExists()) return true;
+        return resp.isVerified();
     }
 }
