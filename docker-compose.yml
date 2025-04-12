@@ -1,11 +1,9 @@
 services:
   software.design.tml.rabbitmq:
+    env_file:
+      - .env
     image: rabbitmq:latest
     container_name: soft.rabbitmq
-    environment:
-      RABBITMQ_DEFAULT_USER: softAdmin
-      RABBITMQ_DEFAULT_PASS: softPassword
-      RABBITMQ_DEFAULT_VHOST: vhost
     ports:
       - "5672:5672"
       - "15672:15672"

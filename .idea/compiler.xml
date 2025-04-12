@@ -12,6 +12,7 @@
         <module name="verification-service" />
         <module name="eureka-server" />
         <module name="mail-service" />
+        <module name="project-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -20,6 +21,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="mail-service" options="-parameters" />
+      <module name="project-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
       <module name="verification-service" options="-parameters" />
     </option>
