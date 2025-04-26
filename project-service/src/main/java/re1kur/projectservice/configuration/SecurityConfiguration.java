@@ -26,7 +26,7 @@ public class SecurityConfiguration {
     @Value("${custom.jwt.publicKeyPath}")
     private String publicKeyPath;
 
-    public SecurityFilterChain securityWebFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(Customizer.withDefaults()))
