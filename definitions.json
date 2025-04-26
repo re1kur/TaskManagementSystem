@@ -1,0 +1,73 @@
+{
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "exchanges": [
+    {
+      "name" : "soft.registration.exchange",
+      "vhost" : "/",
+      "topic" : "topic",
+      "durable" : true
+    },
+    {
+      "name" : "soft.verification.exchange",
+      "vhost" : "/",
+      "topic" : "topic",
+      "durable" : true
+    }
+  ],
+  "queues": [
+    {
+      "name" : "user.welcome.queue",
+      "vhost" : "/",
+      "durable" : true
+    },
+    {
+      "name" : "verification.registration.queue",
+      "vhost" : "/",
+      "durable" : true
+    },
+    {
+      "name" : "user.verification.queue",
+      "vhost" : "/",
+      "durable" : true
+    },
+    {
+      "name" : "user.notification.queue",
+      "vhost" : "/",
+      "durable" : true
+    }
+  ],
+  "bindings": [
+    {
+      "source" : "soft.registration.exchange",
+      "vhost" : "/",
+      "destination" : "user.welcome.queue",
+      "routing_key" : "user.register",
+      "destination_type" : "queue"
+    },
+    {
+      "source" : "soft.registration.exchange",
+      "vhost" : "/",
+      "destination" : "user.verification.registration.queue",
+      "routing_key" : "user.register",
+      "destination_type" : "queue"
+    },
+    {
+      "source" : "soft.verification.exchange",
+      "vhost" : "/",
+      "destination" : "verification.queue",
+      "routing_key" : "user.verified",
+      "destination_type" : "queue"
+    },
+    {
+      "source" : "soft.verification.exchange",
+      "vhost" : "/",
+      "destination" : "notification.queue",
+      "routing_key" : "code.generated",
+      "destination_type" : "queue"
+    }
+  ]
+}

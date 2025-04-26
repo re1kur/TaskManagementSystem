@@ -1,15 +1,5 @@
 spring:
   application:
     name: project-service
-  liquibase:
-    change-log: db/changelog/db.changelog-master.yml
-  docker:
-    compose:
-      file: project-service/docker-compose.yml
-  jpa:
-    open-in-view: false
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+  config:
+    import: optional:configserver:http://localhost:8888

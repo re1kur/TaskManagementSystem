@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: config-server
+  config:
+    import: file:config-server/git_prop.yml
+  cloud:
+    config:
+      server:
+        git:
+          clone-on-start: true
+          basedir: /tmp/tms_config
+          uri: ${GITHUB_URL}
+          username: ${GITHUB_USERNAME}
+          password: ${GITHUB_ACCESS_TOKEN}
+          default-label: master
+
+server:
+  port: 8888

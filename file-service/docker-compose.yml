@@ -1,0 +1,16 @@
+services:
+  postgres:
+    env_file: postgres.env
+    image: postgres:latest
+    ports:
+      - '5435:5432'
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: gpn.case.file.storage
+    command:
+      - server --console-address ":9001"
+    env_file:
+      - minio.env
+    ports:
+      - '9000:9000'
+      - '9001:9001'

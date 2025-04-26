@@ -1,8 +1,7 @@
 services:
-  software.design.user.database:
+  postgres:
     env_file:
       - .env
     image: postgres:latest
-    container_name: user.db
     ports:
-      - "5433:5432"
+      - '5433:5432'

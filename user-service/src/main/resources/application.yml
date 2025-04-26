@@ -1,39 +1,5 @@
 spring:
   application:
     name: user-service
-  liquibase:
-    change-log: db/changelog/db.changelog-master.yml
-  docker:
-    compose:
-      file: user-service/docker-compose.yml
-  jpa:
-    open-in-view: false
-  rabbitmq:
-    virtual-host: vhost
-    password: softPassword
-    username: softAdmin
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
-server:
-  port: 0
-
-custom:
-  jwt:
-    keySize: 2048
-    privateKeyPath: /tmp/private.key
-    publicKeyPath: /tmp/public.key
-
-rabbitmq:
-  exchange: soft.registration.exchange
-  routingKey: user.register
-  queues:
-    welcome-queue:
-      name: user.welcome.queue
-    verification-registration-queue:
-      name: verification.registration.queue
-    verification-queue:
-      name: user.verification.queue
+  config:
+    import: optional:configserver:http://localhost:8888
